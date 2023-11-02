@@ -12,11 +12,13 @@ public class Wordle implements Runnable {
 		SwingUtilities.invokeLater(new Wordle());
 		
 		//use cross-platform look and feel so button backgrounds work on Mac
-		try {
-		    UIManager.setLookAndFeel( UIManager.getCrossPlatformLookAndFeelClassName() );
-		 } catch (Exception e) {
-			 e.printStackTrace();
-		 }
+		if (!System.getProperty("os.name").contains("Windows")) {
+			try {
+			    UIManager.setLookAndFeel( UIManager.getCrossPlatformLookAndFeelClassName() );
+			 } catch (Exception e) {
+				 e.printStackTrace();
+			 }	
+		}
 	}
 
 	@Override
