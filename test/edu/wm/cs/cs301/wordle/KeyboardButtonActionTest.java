@@ -3,45 +3,38 @@ package edu.wm.cs.cs301.wordle;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.awt.event.ActionEvent;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+
+import javax.swing.JButton;
 
 import org.junit.jupiter.api.Test;
 
+import edu.wm.cs.cs301.wordle.controller.KeyboardButtonAction;
 import edu.wm.cs.cs301.wordle.model.WordleModel;
 import edu.wm.cs.cs301.wordle.view.WordleFrame;
 
 class KeyboardButtonActionTest {
 
 	@Test
-	void testValidWord() throws IOException {
-//		WordleModel testModel = new WordleModel();
-//		new WordleFrame(testModel);
-//		
-//		testModel.setCurrentWord();
+	void testValidWord() {
+		WordleModel testModel = new WordleModel();
+		WordleFrame testFrame = new WordleFrame(testModel);
 		
-//		ActionEvent testEvent = new ActionEvent();
-		
-//		System.out.println(testModel.getCurrentRow());
+		int startingRow = testModel.getCurrentRowNumber();
 
-		BufferedReader br = new BufferedReader(new FileReader("resources/usa.txt"));
-			
-		String currentWord = "";
-		String inputWord = "adieu";
-		boolean match = false;
-			
-		while (currentWord != null) {
-			if (currentWord.equals(inputWord)) {
-				match = true;
-			}
-			currentWord = br.readLine();
+		char[] guess = ("abcde").toCharArray();
+		for (char c : guess) {
+			testModel.setCurrentColumn(c);
 		}
-			
-		br.close();
 		
-		assertTrue(match, "The input word should be in the word list.");
+		KeyboardButtonAction testAction = new KeyboardButtonAction(testFrame, testModel);
+		JButton dummyButton = new JButton();
+		dummyButton.setActionCommand("Enter");
+		ActionEvent testEvent = new ActionEvent(dummyButton, ActionEvent.ACTION_PERFORMED, "\n");
+		testAction.actionPerformed(testEvent);
+		
+		int endingRow = testModel.getCurrentRowNumber();
+		
+		assertEquals(startingRow, endingRow, "An invalid word should not be able to be guessed.");
 	}
 
 }
