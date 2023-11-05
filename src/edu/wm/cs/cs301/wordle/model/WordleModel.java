@@ -1,6 +1,9 @@
 package edu.wm.cs.cs301.wordle.model;
 
 import java.awt.Color;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
@@ -111,7 +114,7 @@ public class WordleModel {
 		return currentRow - 1;
 	}
 	
-	public boolean setCurrentRow() {		
+	public boolean setCurrentRow() {
 		for (int column = 0; column < guess.length; column++) {
 			Color backgroundColor = AppColors.GRAY;
 			Color foregroundColor = Color.WHITE;
@@ -139,6 +142,29 @@ public class WordleModel {
 			}
 		}
 		
+		return false;
+	}
+	
+	public boolean checkValidWord() throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader("resources/usa.txt"));
+		WordleResponse[] guessArray = wordleGrid[currentRow];
+		
+		String guess = "";
+		for (WordleResponse wordleResponse : guessArray) {
+			guess += wordleResponse.getChar();
+		}
+		guess = guess.toLowerCase();
+		
+		String line = "";
+		while (line != null) {
+			if (line.equals(guess)) {
+				br.close();
+				return true;
+			}
+			line = br.readLine();
+		}
+		
+		br.close();
 		return false;
 	}
 
