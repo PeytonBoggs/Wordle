@@ -56,7 +56,7 @@ public class WordleModel {
 		this.currentWord = word.toUpperCase().toCharArray();
 		
 		//uncomment line below to show secret word on the console for debugging
-		//System.out.println("Current word set to " + word);
+		System.out.println("Current word set to " + word);
 	}
 
 	private String getCurrentWord() {
@@ -190,6 +190,10 @@ public class WordleModel {
 
 	public Statistics getStatistics() {
 		return statistics;
+	}
+	
+	public char[] getMysteryWord() {
+		return currentWord;
 	}
 
 }

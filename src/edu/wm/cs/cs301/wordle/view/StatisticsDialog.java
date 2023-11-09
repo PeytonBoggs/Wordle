@@ -70,14 +70,36 @@ public class StatisticsDialog extends JDialog {
 	}
 	
 	private JPanel createTitlePanel() {
-		JPanel panel = new JPanel(new FlowLayout());
+		JPanel panel = new JPanel(new BorderLayout());
 		panel.setBorder(BorderFactory.createEmptyBorder(0, 5, 5, 5));
+		
+		JPanel labelCenteringPanel = new JPanel(new FlowLayout());
 		
 		JLabel label = new JLabel("Statistics");
 		label.setFont(AppFonts.getTitleFont());
-		panel.add(label);
+		labelCenteringPanel.add(label);
+		panel.add(labelCenteringPanel, BorderLayout.NORTH);
+		
+		if (model.getStatistics().getCurrentStreak() == 0) {
+			JPanel mysteryCenteringPanel = new JPanel(new FlowLayout());
+			
+			JLabel mysteryWordLabel = getMysteryWordLabel();
+			mysteryWordLabel.setFont(AppFonts.getTextFont());
+			
+			mysteryCenteringPanel.add(mysteryWordLabel);
+			
+			panel.add(mysteryCenteringPanel, BorderLayout.SOUTH);
+		}
 		
 		return panel;
+	}
+	
+	private JLabel getMysteryWordLabel() {
+		String mysteryWord = new String(model.getMysteryWord());
+		int totalAttempts = model.getMaximumRows();
+		
+		JLabel mysteryWordLabel = new JLabel("You failed to guess the mystery word " + mysteryWord + " in the alloted " + totalAttempts + " guesses.");
+		return mysteryWordLabel;
 	}
 	
 	private JPanel createBottomPanel() {
