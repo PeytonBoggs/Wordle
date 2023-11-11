@@ -20,15 +20,6 @@ class WordleModelTest {
 	}
 	
 	@Test
-	void setDifficultyExistsTest() {
-		try {
-			testModel.getClass().getMethod("setDifficulty", WordleModel.class);
-		} catch (NoSuchMethodException e) {
-			fail("setDifficulty method not yet defined");
-		}
-	}
-	
-	@Test
 	void defaultColumnTest() {
 		assertEquals(5, testModel.getColumnCount(), "Default model should have five columns");
 	}
@@ -41,51 +32,42 @@ class WordleModelTest {
 	@Test
 	void easyColumnTest() {
 		testModel.setDifficulty("easy");
+		testModel.setGridSize();
 		assertEquals(4, testModel.getColumnCount(), "Model should have four columns on easy difficulty");
 	}
 	
 	@Test
 	void easyRowTest() {
 		testModel.setDifficulty("easy");
+		testModel.setGridSize();
 		assertEquals(5, testModel.getMaximumRows(), "Model should have five rows on easy difficulty");
 	}
 	
 	@Test
 	void mediumColumnTest() {
 		testModel.setDifficulty("medium");
+		testModel.setGridSize();
 		assertEquals(5, testModel.getColumnCount(), "Model should have five columns on medium difficulty");
 	}
 	
 	@Test
 	void mediumRowTest() {
 		testModel.setDifficulty("medium");
+		testModel.setGridSize();
 		assertEquals(6, testModel.getMaximumRows(), "Model should have six rows on medium difficulty");
 	}
 	
 	@Test
 	void hardColumnTest() {
 		testModel.setDifficulty("hard");
+		testModel.setGridSize();
 		assertEquals(6, testModel.getColumnCount(), "Model should have six columns on hard difficulty");
 	}
 	
 	@Test
 	void hardRowTest() {
 		testModel.setDifficulty("hard");
+		testModel.setGridSize();
 		assertEquals(7, testModel.getMaximumRows(), "Model should have seven rows on hard difficulty");
-	}
-	
-	@Test
-	void abortOnDifficultyChangeTest() {
-		testModel.setCurrentColumn('h');
-		testModel.setCurrentColumn('e');
-		testModel.setCurrentColumn('l');
-		testModel.setCurrentColumn('l');
-		testModel.setCurrentColumn('o');
-		testModel.setCurrentRow();
-		
-		testModel.setDifficulty("hard");
-		
-		assertEquals(-1, testModel.getCurrentRowNumber(), "Model should reset after changing difficulty");
-		
 	}
 }

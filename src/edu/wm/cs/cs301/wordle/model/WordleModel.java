@@ -13,8 +13,9 @@ public class WordleModel {
 	
 	private char[] currentWord, guess;
 	
-	private final int columnCount, maximumRows;
+	private int columnCount, maximumRows;
 	private int currentColumn, currentRow;
+	private String difficulty = "medium";
 	
 	private List<String> wordList;
 	
@@ -27,8 +28,7 @@ public class WordleModel {
 	public WordleModel() {
 		this.currentColumn = -1;
 		this.currentRow = 0;
-		this.columnCount = 5;
-		this.maximumRows = 6;
+		setGridSize();
 		this.random = new Random();
 		
 		createWordList();
@@ -44,10 +44,13 @@ public class WordleModel {
 	}
 	
 	public void initialize() {
-		this.wordleGrid = initializeWordleGrid();
 		this.currentColumn = -1;
 		this.currentRow = 0;
-		generateCurrentWord();
+		setGridSize();
+		
+		createWordList();
+		
+		this.wordleGrid = initializeWordleGrid();
 		this.guess = new char[columnCount];
 	}
 
@@ -166,6 +169,27 @@ public class WordleModel {
 		
 		br.close();
 		return false;
+	}
+	
+	public void setDifficulty(String difficulty) {
+		this.difficulty = difficulty;
+	}
+	
+	public void setGridSize() {
+		switch(difficulty) {
+		case("easy"):
+			this.columnCount = 4;
+			this.maximumRows = 5;
+			break;
+		case("hard"):
+			this.columnCount = 6;
+			this.maximumRows = 7;
+			break;
+		default:
+			this.columnCount = 5;
+			this.maximumRows = 6;
+			break;
+		}
 	}
 
 	public WordleResponse[][] getWordleGrid() {

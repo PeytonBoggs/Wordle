@@ -31,7 +31,7 @@ public class DistributionPanel extends JPanel {
 	}
 	
 	private void calculatePercentages() {
-		this.counts = new int[model.getMaximumRows()];
+		this.counts = new int[7];
 		
 		for (int value : model.getStatistics().getWordsGuessed()) {
 			counts[value]++;

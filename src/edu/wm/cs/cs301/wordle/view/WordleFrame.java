@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -38,6 +39,12 @@ public class WordleFrame {
 		int width = keyboardPanel.getPanel().getPreferredSize().width;
 		this.wordleGridPanel = new WordleGridPanel(this, model, width);
 		this.frame = createAndShowGUI();
+	}
+	
+	public void reset() {
+		model.initialize();	
+		frame.dispose();
+		new WordleFrame(model);
 	}
 	
 	private JFrame createAndShowGUI() {
@@ -78,6 +85,36 @@ public class WordleFrame {
 		JMenuItem aboutItem = new JMenuItem("About...");
 		aboutItem.addActionListener(event -> new AboutDialog(this));
 		helpMenu.add(aboutItem);
+		
+		JMenu difficultyMenu = new JMenu("Difficulty");
+		menuBar.add(difficultyMenu);
+		
+		JMenuItem easyItem = new JMenuItem("Easy");
+		easyItem.addActionListener((ActionListener) new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				model.setDifficulty("easy");
+				reset();
+			}
+		});
+		difficultyMenu.add(easyItem);
+		
+		JMenuItem mediumItem = new JMenuItem("Medium");
+		mediumItem.addActionListener((ActionListener) new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				model.setDifficulty("medium");
+				reset();
+			}
+		});
+		difficultyMenu.add(mediumItem);
+		
+		JMenuItem hardItem = new JMenuItem("Hard");
+		hardItem.addActionListener((ActionListener) new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				model.setDifficulty("hard");
+				reset();
+			}
+		});
+		difficultyMenu.add(hardItem);
 		
 		return menuBar;
 	}
